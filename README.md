@@ -5,7 +5,7 @@ A ChatGPT plugin that enables you to use AWS with natural language.
 Note: This is **not** an AWS product. This is an open source project enabling ChatGPT to *use* AWS.
 
 ## Architecture
-![Architecture of the AWS SDK for Natural Language](./ai-plugin.png)
+![Architecture of the AWS SDK for Natural Language](./aws-plugin.png)
 
 ## Instructions
 To run this yourself, you will need access to [ChatGPT plugins](https://openai.com/blog/chatgpt-plugins). 
