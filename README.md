@@ -1,4 +1,4 @@
-# aws-sdk-natual-language
+# aws-sdk-natural-language
 
 A ChatGPT plugin that enables you to use AWS with natural language.
 
