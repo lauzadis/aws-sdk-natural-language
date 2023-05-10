@@ -6,23 +6,16 @@ info:
 servers:
   - url: https://gpt4-plugin-test-mataslauzadis.vercel.app/
 paths:
-  /aws/authenticate/{access_key_id}&{secret_access_key}:
+  /aws/authenticate:
     post:
       operationId: authenticate
       summary: Authenticate with AWS using the given credentials
-      parameters:
-      - in: path
-        name: access_key_id
+      requestBody: 
         required: true
-        schema:
-          type: string
-        description: The access key ID of the AWS account.
-      - in: path
-        name: secret_access_key
-        required: true
-        schema:
-          type: string
-        description: The secret access key of the AWS account.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthenticateRequest'
       responses:
         "200":
           description: "OK"  
@@ -49,17 +42,16 @@ paths:
               schema:
                 $ref: '#/components/schemas/list_objects_response'
 
-  /aws/s3/create_bucket/{bucket_name}:
+  /aws/s3/create_bucket:
     post:
       operationId: createBucket
       summary: Create an S3 bucket
-      parameters:
-      - in: path
-        name: bucket_name
+      requestBody: 
         required: true
-        schema:
-            type: string
-        description: The name of the bucket to create
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateBucketRequest'
       responses:
         "200": 
           description: "OK"
@@ -93,29 +85,16 @@ paths:
               schema:
                 $ref: '#/components/schemas/get_object_response'
 
-  /aws/s3/put_object/{bucket}&{key}&{data}:
+  /aws/s3/put_object:
     post:
       operationId: putObject
       summary: Put an object to an S3 bucket
-      parameters:
-      - in: path
-        name: bucket
+      requestBody: 
         required: true
-        schema:
-            type: string
-        description: The name of the bucket to put the object in
-      - in: path
-        name: key
-        required: true
-        schema:
-            type: string
-        description: The key of the object being put
-      - in: path
-        name: data
-        required: true
-        schema:
-            type: string
-        description: The Base64 encoding of the object being put
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PutObjectRequest'
       responses:
         "200": 
           description: "OK"
@@ -123,23 +102,16 @@ paths:
             text:
               "OK"
 
-  /aws/s3/delete_object/{bucket}&{key}:
+  /aws/s3/delete_object:
     post:
       operationId: deleteObject
       summary: Delete an S3 object
-      parameters:
-      - in: path
-        name: bucket
+      requestBody: 
         required: true
-        schema:
-            type: string
-        description: The name of the bucket to delete the object from
-      - in: path
-        name: key
-        required: true
-        schema:
-            type: string
-        description: The key of the object to delete
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteObjectRequest'
       responses:
         "200": 
           description: "OK"
@@ -149,6 +121,16 @@ paths:
 
 components:
   schemas:
+    AuthenticateRequest:
+      type: object
+      properties:
+        access_key_id:
+          type: string
+          description: The access key ID
+        secret_access_key:
+          type: string
+          description: The secret access key
+
     list_objects_response:
       type: object
       properties:
@@ -157,6 +139,13 @@ components:
           items:
             type: string
           description: The list of objects.
+
+    CreateBucketRequest:
+      type: object
+      properties:
+        bucketName:
+          type: string
+          description: The name of the bucket to create
 
     create_bucket_response:
       type: object
@@ -171,3 +160,26 @@ components:
         data:
           type: string
           description: The Base64 encoding of the object.
+
+    PutObjectRequest:
+      type: object
+      properties:
+        bucket:  
+          type: string
+          description: The name of the bucket to put the object in
+        key:
+          type: string
+          description: The key of the object being put
+        data:
+          type: string
+          description: The data representing the object being put
+        
+    DeleteObjectRequest:
+      type: object
+      properties:
+        bucket:  
+          type: string
+          description: The name of the bucket to delete the object from
+        key:
+          type: string
+          description: The key of the object being deleted

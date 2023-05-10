@@ -4,6 +4,8 @@ import quart
 import quart_cors
 import boto3 
 import botocore
+from quart import request
+import os
 
 # Note: Setting CORS to allow chat.openapi.com is required for ChatGPT to access your plugin
 app = quart_cors.cors(quart.Quart(__name__), allow_origin="*") #https://chat.openai.com")
@@ -11,24 +13,29 @@ app = quart_cors.cors(quart.Quart(__name__), allow_origin="*") #https://chat.ope
 class S3():
     def __init__(self):
         self.client = None
+        if os.environ.get("AWS_ACCESS_KEY_ID") is not None and os.environ.get("AWS_SECRET_ACCESS_KEY") is not None:
+            print("Found credentials in environment, authenticating...")
+            self.authenticate(os.environ.get("AWS_ACCESS_KEY_ID"), os.environ.get("AWS_SECRET_ACCESS_KEY"))
 
     def authenticate(self, access_key_id, secret_access_key):
         self.client = boto3.client('s3', aws_access_key_id=access_key_id, aws_secret_access_key=secret_access_key)
 
 s3 = S3()
 
-@app.post("/aws/authenticate/<string:access_key_id>&<string:secret_access_key>")
-async def authenticate(access_key_id, secret_access_key):
-    s3.authenticate(access_key_id, secret_access_key)
+@app.post("/aws/authenticate")
+async def authenticate():
+    r = await request.get_json()
+    s3.authenticate(r['access_key_id'], r['secret_access_key'])
     return quart.Response(response="OK", status=200)
 
-@app.post("/aws/s3/create_bucket/<string:bucketName>")
-async def create_bucket(bucketName):
+@app.post("/aws/s3/create_bucket")
+async def create_bucket():
+    r = await request.get_json()
     try:
-        if s3.client.create_bucket(Bucket=bucketName):
-            return quart.Response(response=json.dumps({bucketName: bucketName}, indent=4, sort_keys=True, default=str), status=200)
+        if s3.client.create_bucket(Bucket=r['bucketName']):
+            return quart.Response(response=json.dumps({'bucketName': r['bucketName']}, indent=4, sort_keys=True, default=str), status=200)
         else:
-            return quart.Response(response=json.dumps({bucketName: bucketName}, indent=4, sort_keys=True, default=str), status=500)
+            return quart.Response(response=json.dumps({'bucketName': r['bucketName']}, indent=4, sort_keys=True, default=str), status=500)
     except botocore.exceptions.ClientError as e:
         return quart.Response(response=f'NOT OK: {e}', status=500)
 
@@ -52,18 +59,20 @@ async def get_object(bucket, key):
     except botocore.exceptions.ClientError as e:
         return quart.Response(response=f'NOT OK: {e}', status=500)
 
-@app.post("/aws/s3/put_object/<string:bucket>&<string:key>&<string:data>")
-async def put_object(bucket, key, data):
+@app.post("/aws/s3/put_object")
+async def put_object():
+    r = await request.get_json()
     try:
-        s3.client.put_object(Bucket=bucket, Key=key, Body=data)
+        s3.client.put_object(Bucket=r['bucket'], Key=r['key'], Body=r['data'])
         return quart.Response(response='OK', status=200)
     except botocore.exceptions.ClientError as e:
         return quart.Response(response=f'NOT OK: {e}', status=500)
     
-@app.post("/aws/s3/delete_object/<string:bucket>&<string:key>")
-async def delete_object(bucket, key):
+@app.post("/aws/s3/delete_object")
+async def delete_object():
+    r = await request.get_json()
     try:
-        s3.client.delete_object(Bucket=bucket, Key=key)
+        s3.client.delete_object(Bucket=r['bucket'], Key=r['key'])
         return quart.Response(response='OK', status=200)
     except botocore.exceptions.ClientError as e:
         return quart.Response(response=f'NOT OK: {e}', status=500)
