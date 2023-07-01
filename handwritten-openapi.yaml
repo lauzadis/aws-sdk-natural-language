@@ -1,0 +1,185 @@
+openapi: 3.0.1
+info:
+  title: AWS SDK for Natural Language
+  description: Use AWS with natural language
+  version: 'v1'
+servers:
+  - url: https://gpt4-plugin-test-mataslauzadis.vercel.app/
+paths:
+  /aws/authenticate:
+    post:
+      operationId: authenticate
+      summary: Authenticate with AWS using the given credentials
+      requestBody: 
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthenticateRequest'
+      responses:
+        "200":
+          description: "OK"  
+          content:
+            text:
+              "OK"
+
+  /aws/s3/list_objects/{bucket_name}:
+    get:
+      operationId: listObjects
+      summary: Get the list of objects
+      parameters:
+      - in: path
+        name: bucket_name
+        required: true
+        schema:
+            type: string
+        description: The name of the bucket to list objects in.
+      responses:
+        "200": 
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/list_objects_response'
+
+  /aws/s3/create_bucket:
+    post:
+      operationId: createBucket
+      summary: Create an S3 bucket
+      requestBody: 
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateBucketRequest'
+      responses:
+        "200": 
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/create_bucket_response'
+
+  /aws/s3/get_object/{bucket}&{key}:
+    get:
+      operationId: getObject
+      summary: Get an object with the given key from the given S3 bucket
+      parameters:
+      - in: path
+        name: bucket
+        required: true
+        schema:
+            type: string
+        description: The name of the bucket to retrieve the object from
+      - in: path
+        name: key
+        required: true
+        schema:
+            type: string
+        description: The key of the object to retrieve
+      responses:
+        "200": 
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/get_object_response'
+
+  /aws/s3/put_object:
+    post:
+      operationId: putObject
+      summary: Put an object to an S3 bucket
+      requestBody: 
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PutObjectRequest'
+      responses:
+        "200": 
+          description: "OK"
+          content:
+            text:
+              "OK"
+
+  /aws/s3/delete_object:
+    post:
+      operationId: deleteObject
+      summary: Delete an S3 object
+      requestBody: 
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteObjectRequest'
+      responses:
+        "200": 
+          description: "OK"
+          content:
+            text:
+              "OK"
+
+components:
+  schemas:
+    AuthenticateRequest:
+      type: object
+      properties:
+        access_key_id:
+          type: string
+          description: The access key ID
+        secret_access_key:
+          type: string
+          description: The secret access key
+
+    list_objects_response:
+      type: object
+      properties:
+        todos:
+          type: array
+          items:
+            type: string
+          description: The list of objects.
+
+    CreateBucketRequest:
+      type: object
+      properties:
+        bucketName:
+          type: string
+          description: The name of the bucket to create
+
+    create_bucket_response:
+      type: object
+      properties:
+        bucketName:
+          type: string
+          description: The name of the bucket which was created.
+
+    get_object_response:
+      type: object
+      properties:
+        data:
+          type: string
+          description: The Base64 encoding of the object.
+
+    PutObjectRequest:
+      type: object
+      properties:
+        bucket:  
+          type: string
+          description: The name of the bucket to put the object in
+        key:
+          type: string
+          description: The key of the object being put
+        data:
+          type: string
+          description: The data representing the object being put
+        
+    DeleteObjectRequest:
+      type: object
+      properties:
+        bucket:  
+          type: string
+          description: The name of the bucket to delete the object from
+        key:
+          type: string
+          description: The key of the object being deleted
