@@ -59,14 +59,23 @@ async def get_object(bucket, key):
     except botocore.exceptions.ClientError as e:
         return quart.Response(response=f'NOT OK: {e}', status=500)
 
-@app.post("/aws/s3/put_object")
+@app.post("/com/amazonaws/s3/PutObjectRequest")
 async def put_object():
     r = await request.get_json()
     try:
-        s3.client.put_object(Bucket=r['bucket'], Key=r['key'], Body=r['data'])
+        s3.client.put_object(Bucket=r['com.amazonaws.s3#BucketName'], Key=r['com.amazonaws.s3#ObjectKey'], Body=r['com.amazonaws.s3#StreamingBlob'])
         return quart.Response(response='OK', status=200)
     except botocore.exceptions.ClientError as e:
         return quart.Response(response=f'NOT OK: {e}', status=500)
+
+# @app.post("/aws/s3/put_object")
+# async def put_object():
+#     r = await request.get_json()
+#     try:
+#         s3.client.put_object(Bucket=r['bucket'], Key=r['key'], Body=r['data'])
+#         return quart.Response(response='OK', status=200)
+#     except botocore.exceptions.ClientError as e:
+#         return quart.Response(response=f'NOT OK: {e}', status=500)
     
 @app.post("/aws/s3/delete_object")
 async def delete_object():
