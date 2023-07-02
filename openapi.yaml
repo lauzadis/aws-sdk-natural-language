@@ -23,97 +23,18 @@ paths:
             text:
               "OK"
 
-  /aws/s3/list_objects/{bucket_name}:
-    get:
-      operationId: listObjects
-      summary: Get the list of objects
-      parameters:
-      - in: path
-        name: bucket_name
-        required: true
-        schema:
-            type: string
-        description: The name of the bucket to list objects in.
-      responses:
-        "200": 
-          description: "OK"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/list_objects_response'
-
-  /aws/s3/create_bucket:
-    post:
-      operationId: createBucket
-      summary: Create an S3 bucket
-      requestBody: 
+  /com/amazonaws/s3/PutObjectRequest:
+    POST:
+      operationId: PutObjectRequest
+      summary: Adds an object to a bucket. You must have WRITE permissions on a bucket to add an object         to it.         Amazon S3 never adds partial objects; if you receive a success response, Amazon S3 added
+      requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateBucketRequest'
+              $ref: com.amazonaws.s3#PutObjectRequest
       responses:
-        "200": 
-          description: "OK"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/create_bucket_response'
-
-  /aws/s3/get_object/{bucket}&{key}:
-    get:
-      operationId: getObject
-      summary: Get an object with the given key from the given S3 bucket
-      parameters:
-      - in: path
-        name: bucket
-        required: true
-        schema:
-            type: string
-        description: The name of the bucket to retrieve the object from
-      - in: path
-        name: key
-        required: true
-        schema:
-            type: string
-        description: The key of the object to retrieve
-      responses:
-        "200": 
-          description: "OK"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/get_object_response'
-
-  /aws/s3/put_object:
-    post:
-      operationId: putObject
-      summary: Put an object to an S3 bucket
-      requestBody: 
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PutObjectRequest'
-      responses:
-        "200": 
-          description: "OK"
-          content:
-            text:
-              "OK"
-
-  /aws/s3/delete_object:
-    post:
-      operationId: deleteObject
-      summary: Delete an S3 object
-      requestBody: 
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/DeleteObjectRequest'
-      responses:
-        "200": 
+        "200":
           description: "OK"
           content:
             text:
@@ -131,55 +52,120 @@ components:
           type: string
           description: The secret access key
 
-    list_objects_response:
+    com.amazonaws.s3#PutObjectRequest:
       type: object
       properties:
-        todos:
-          type: array
-          items:
-            type: string
-          description: The list of objects.
-
-    CreateBucketRequest:
-      type: object
-      properties:
-        bucketName:
+        com.amazonaws.s3#ObjectCannedACL:
           type: string
-          description: The name of the bucket to create
-
-    create_bucket_response:
-      type: object
-      properties:
-        bucketName:
+          enum: [private,public-read,public-read-write,authenticated-read,aws-exec-read,bucket-owner-read,bucket-owner-full-control]
+          description: The canned ACL to apply to the object. For more information, see Canned      ACL.         This action is not supported by Amazon S3 on Outposts.
+        com.amazonaws.s3#StreamingBlob:
           type: string
-          description: The name of the bucket which was created.
-
-    get_object_response:
-      type: object
-      properties:
-        data:
+          description: Object data.
+        com.amazonaws.s3#BucketName:
           type: string
-          description: The Base64 encoding of the object.
-
-    PutObjectRequest:
-      type: object
-      properties:
-        bucket:  
+          description: The bucket name to which the PUT action was initiated.          When using this action with an access point, you must direct requests to the access point hostname. The access point hostname takes the 
+        com.amazonaws.s3#CacheControl:
           type: string
-          description: The name of the bucket to put the object in
-        key:
+          description:  Can be used to specify caching behavior along the request/reply chain. For more         information, see http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9.
+        com.amazonaws.s3#ContentDisposition:
           type: string
-          description: The key of the object being put
-        data:
+          description: Specifies presentational information for the object. For more information, see http://www.w3.org/Protocols/rfc2616/rfc2616-sec19.html#sec19.5.1.
+        com.amazonaws.s3#ContentEncoding:
           type: string
-          description: The data representing the object being put
-        
-    DeleteObjectRequest:
-      type: object
-      properties:
-        bucket:  
+          description: Specifies what content encodings have been applied to the object and thus what decoding         mechanisms must be applied to obtain the media-type referenced by the Content-Type header         field.
+        com.amazonaws.s3#ContentLanguage:
           type: string
-          description: The name of the bucket to delete the object from
-        key:
+          description: The language the content is in.
+        com.amazonaws.s3#ContentLength:
+          type: integer
+          description: Size of the body in bytes. This parameter is useful when the size of the body cannot be         determined automatically. For more information, see http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.ht
+        com.amazonaws.s3#ContentMD5:
           type: string
-          description: The key of the object being deleted
+          description: The base64-encoded 128-bit MD5 digest of the message (without the headers) according to         RFC 1864. This header can be used as a message integrity check to verify that the data is         the sa
+        com.amazonaws.s3#ContentType:
+          type: string
+          description: A standard MIME type describing the format of the contents. For more information, see            http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.17.
+        com.amazonaws.s3#ChecksumAlgorithm:
+          type: string
+          enum: [CRC32,CRC32C,SHA1,SHA256]
+          description: Indicates the algorithm used to create the checksum for the object when using the SDK. This header will not provide any    additional functionality if not using the SDK. When sending this header, ther
+        com.amazonaws.s3#ChecksumCRC32:
+          type: string
+          description: This header can be used as a data integrity check to verify that the data received is the same data that was originally sent.    This header specifies the base64-encoded, 32-bit CRC32 checksum of the 
+        com.amazonaws.s3#ChecksumCRC32C:
+          type: string
+          description: This header can be used as a data integrity check to verify that the data received is the same data that was originally sent.    This header specifies the base64-encoded, 32-bit CRC32C checksum of the
+        com.amazonaws.s3#ChecksumSHA1:
+          type: string
+          description: This header can be used as a data integrity check to verify that the data received is the same data that was originally sent.    This header specifies the base64-encoded, 160-bit SHA-1 digest of the o
+        com.amazonaws.s3#ChecksumSHA256:
+          type: string
+          description: This header can be used as a data integrity check to verify that the data received is the same data that was originally sent.    This header specifies the base64-encoded, 256-bit SHA-256 digest of the
+        com.amazonaws.s3#Expires:
+          type: string
+          description: The date and time at which the object is no longer cacheable. For more information, see            http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.21.
+        com.amazonaws.s3#GrantFullControl:
+          type: string
+          description: Gives the grantee READ, READ_ACP, and WRITE_ACP permissions on the      object.         This action is not supported by Amazon S3 on Outposts.
+        com.amazonaws.s3#GrantRead:
+          type: string
+          description: Allows grantee to read the object data and its      metadata.         This action is not supported by Amazon S3 on Outposts.
+        com.amazonaws.s3#GrantReadACP:
+          type: string
+          description: Allows grantee to read the object ACL.         This action is not supported by Amazon S3 on Outposts.
+        com.amazonaws.s3#GrantWriteACP:
+          type: string
+          description: Allows grantee to write the ACL for the applicable      object.         This action is not supported by Amazon S3 on Outposts.
+        com.amazonaws.s3#ObjectKey:
+          type: string
+          description: Object key for which the PUT action was initiated.
+        com.amazonaws.s3#ServerSideEncryption:
+          type: string
+          enum: [AES256,aws:kms]
+          description: The server-side encryption algorithm used when storing this object in Amazon S3 (for example,         AES256, aws:kms).
+        com.amazonaws.s3#StorageClass:
+          type: string
+          enum: [STANDARD,REDUCED_REDUNDANCY,STANDARD_IA,ONEZONE_IA,INTELLIGENT_TIERING,GLACIER,DEEP_ARCHIVE,OUTPOSTS,GLACIER_IR,SNOW]
+          description: By default, Amazon S3 uses the STANDARD Storage Class to store newly created objects. The         STANDARD storage class provides high durability and high availability. Depending on         performanc
+        com.amazonaws.s3#WebsiteRedirectLocation:
+          type: string
+          description: If the bucket is configured as a website, redirects requests for this object to another         object in the same bucket or to an external URL. Amazon S3 stores the value of this header in         th
+        com.amazonaws.s3#SSECustomerAlgorithm:
+          type: string
+          description: Specifies the algorithm to use to when encrypting the object (for example,         AES256).
+        com.amazonaws.s3#SSECustomerKey:
+          type: string
+          description: Specifies the customer-provided encryption key for Amazon S3 to use in encrypting data. This         value is used to store the object and then it is discarded; Amazon S3 does not store the         en
+        com.amazonaws.s3#SSECustomerKeyMD5:
+          type: string
+          description: Specifies the 128-bit MD5 digest of the encryption key according to RFC 1321. Amazon S3 uses         this header for a message integrity check to ensure that the encryption key was transmitted        
+        com.amazonaws.s3#SSEKMSKeyId:
+          type: string
+          description: If x-amz-server-side-encryption is present and has the value of         aws:kms, this header specifies the ID of the Amazon Web Services Key Management Service         (Amazon Web Services KMS) symmet
+        com.amazonaws.s3#SSEKMSEncryptionContext:
+          type: string
+          description: Specifies the Amazon Web Services KMS Encryption Context to use for object encryption. The value of this         header is a base64-encoded UTF-8 string holding JSON with the encryption context key-va
+        com.amazonaws.s3#BucketKeyEnabled:
+          type: boolean
+          description: Specifies whether Amazon S3 should use an S3 Bucket Key for object encryption with server-side encryption using AWS KMS (SSE-KMS). Setting this header to true causes Amazon S3 to use an S3 Bucket Key 
+        com.amazonaws.s3#RequestPayer:
+          type: string
+          enum: [requester]
+        com.amazonaws.s3#TaggingHeader:
+          type: string
+          description: The tag-set for the object. The tag-set must be encoded as URL Query parameters. (For         example, "Key1=Value1")
+        com.amazonaws.s3#ObjectLockMode:
+          type: string
+          enum: [GOVERNANCE,COMPLIANCE]
+          description: The Object Lock mode that you want to apply to this object.
+        com.amazonaws.s3#ObjectLockRetainUntilDate:
+          type: string
+          description: The date and time when you want this object's Object Lock to expire. Must be formatted         as a timestamp parameter.
+        com.amazonaws.s3#ObjectLockLegalHoldStatus:
+          type: string
+          enum: [ON,OFF]
+          description: Specifies whether a legal hold will be applied to this object. For more information         about S3 Object Lock, see Object         Lock.
+        com.amazonaws.s3#AccountId:
+          type: string
+          description: The account ID of the expected bucket owner. If the bucket is owned by a different account, the request fails with the HTTP status code 403 Forbidden (access denied).

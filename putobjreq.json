@@ -1,0 +1,275 @@
+{"com.amazonaws.s3#PutObjectRequest": {
+    "type": "structure",
+    "members": {
+        "ACL": {
+            "target": "com.amazonaws.s3#ObjectCannedACL",
+            "traits": {
+                "smithy.api#documentation": "<p>The canned ACL to apply to the object. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/dev/acl-overview.html#CannedACL\">Canned\n      ACL</a>.</p>\n         <p>This action is not supported by Amazon S3 on Outposts.</p>",
+                "smithy.api#httpHeader": "x-amz-acl"
+            }
+        },
+        "Body": {
+            "target": "com.amazonaws.s3#StreamingBlob",
+            "traits": {
+                "smithy.api#default": "",
+                "smithy.api#documentation": "<p>Object data.</p>",
+                "smithy.api#httpPayload": {}
+            }
+        },
+        "Bucket": {
+            "target": "com.amazonaws.s3#BucketName",
+            "traits": {
+                "smithy.api#documentation": "<p>The bucket name to which the PUT action was initiated. </p>\n         <p>When using this action with an access point, you must direct requests to the access point hostname. The access point hostname takes the form <i>AccessPointName</i>-<i>AccountId</i>.s3-accesspoint.<i>Region</i>.amazonaws.com. When using this action with an access point through the Amazon Web Services SDKs, you provide the access point ARN in place of the bucket name. For more information about access point ARNs, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-access-points.html\">Using access points</a> in the <i>Amazon S3 User Guide</i>.</p>\n         <p>When using this action with Amazon S3 on Outposts, you must direct requests to the S3 on Outposts hostname. The S3 on Outposts hostname takes the form <code>\n               <i>AccessPointName</i>-<i>AccountId</i>.<i>outpostID</i>.s3-outposts.<i>Region</i>.amazonaws.com</code>. When using this action with S3 on Outposts through the Amazon Web Services SDKs, you provide the Outposts bucket ARN in place of the bucket name. For more information about S3 on Outposts ARNs, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/S3onOutposts.html\">Using Amazon S3 on Outposts</a> in the <i>Amazon S3 User Guide</i>.</p>",
+                "smithy.api#httpLabel": {},
+                "smithy.api#required": {},
+                "smithy.rules#contextParam": {
+                    "name": "Bucket"
+                }
+            }
+        },
+        "CacheControl": {
+            "target": "com.amazonaws.s3#CacheControl",
+            "traits": {
+                "smithy.api#documentation": "<p> Can be used to specify caching behavior along the request/reply chain. For more\n         information, see <a href=\"http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9\">http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9</a>.</p>",
+                "smithy.api#httpHeader": "Cache-Control"
+            }
+        },
+        "ContentDisposition": {
+            "target": "com.amazonaws.s3#ContentDisposition",
+            "traits": {
+                "smithy.api#documentation": "<p>Specifies presentational information for the object. For more information, see <a href=\"http://www.w3.org/Protocols/rfc2616/rfc2616-sec19.html#sec19.5.1\">http://www.w3.org/Protocols/rfc2616/rfc2616-sec19.html#sec19.5.1</a>.</p>",
+                "smithy.api#httpHeader": "Content-Disposition"
+            }
+        },
+        "ContentEncoding": {
+            "target": "com.amazonaws.s3#ContentEncoding",
+            "traits": {
+                "smithy.api#documentation": "<p>Specifies what content encodings have been applied to the object and thus what decoding\n         mechanisms must be applied to obtain the media-type referenced by the Content-Type header\n         field. For more information, see <a href=\"http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.11\">http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.11</a>.</p>",
+                "smithy.api#httpHeader": "Content-Encoding"
+            }
+        },
+        "ContentLanguage": {
+            "target": "com.amazonaws.s3#ContentLanguage",
+            "traits": {
+                "smithy.api#documentation": "<p>The language the content is in.</p>",
+                "smithy.api#httpHeader": "Content-Language"
+            }
+        },
+        "ContentLength": {
+            "target": "com.amazonaws.s3#ContentLength",
+            "traits": {
+                "smithy.api#default": 0,
+                "smithy.api#documentation": "<p>Size of the body in bytes. This parameter is useful when the size of the body cannot be\n         determined automatically. For more information, see <a href=\"http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.13\">http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.13</a>.</p>",
+                "smithy.api#httpHeader": "Content-Length"
+            }
+        },
+        "ContentMD5": {
+            "target": "com.amazonaws.s3#ContentMD5",
+            "traits": {
+                "smithy.api#documentation": "<p>The base64-encoded 128-bit MD5 digest of the message (without the headers) according to\n         RFC 1864. This header can be used as a message integrity check to verify that the data is\n         the same data that was originally sent. Although it is optional, we recommend using the\n         Content-MD5 mechanism as an end-to-end integrity check. For more information about REST\n         request authentication, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/dev/RESTAuthentication.html\">REST\n            Authentication</a>.</p>",
+                "smithy.api#httpHeader": "Content-MD5"
+            }
+        },
+        "ContentType": {
+            "target": "com.amazonaws.s3#ContentType",
+            "traits": {
+                "smithy.api#documentation": "<p>A standard MIME type describing the format of the contents. For more information, see\n            <a href=\"http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.17\">http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.17</a>.</p>",
+                "smithy.api#httpHeader": "Content-Type"
+            }
+        },
+        "ChecksumAlgorithm": {
+            "target": "com.amazonaws.s3#ChecksumAlgorithm",
+            "traits": {
+                "smithy.api#documentation": "<p>Indicates the algorithm used to create the checksum for the object when using the SDK. This header will not provide any\n    additional functionality if not using the SDK. When sending this header, there must be a corresponding <code>x-amz-checksum</code> or\n    <code>x-amz-trailer</code> header sent. Otherwise, Amazon S3 fails the request with the HTTP status code <code>400 Bad Request</code>. For more\n    information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html\">Checking object integrity</a> in\n    the <i>Amazon S3 User Guide</i>.</p>\n         <p>If you provide an individual checksum, Amazon S3 ignores any provided\n            <code>ChecksumAlgorithm</code> parameter.</p>",
+                "smithy.api#httpHeader": "x-amz-sdk-checksum-algorithm"
+            }
+        },
+        "ChecksumCRC32": {
+            "target": "com.amazonaws.s3#ChecksumCRC32",
+            "traits": {
+                "smithy.api#documentation": "<p>This header can be used as a data integrity check to verify that the data received is the same data that was originally sent.\n    This header specifies the base64-encoded, 32-bit CRC32 checksum of the object. For more information, see\n    <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html\">Checking object integrity</a> in the\n    <i>Amazon S3 User Guide</i>.</p>",
+                "smithy.api#httpHeader": "x-amz-checksum-crc32"
+            }
+        },
+        "ChecksumCRC32C": {
+            "target": "com.amazonaws.s3#ChecksumCRC32C",
+            "traits": {
+                "smithy.api#documentation": "<p>This header can be used as a data integrity check to verify that the data received is the same data that was originally sent.\n    This header specifies the base64-encoded, 32-bit CRC32C checksum of the object. For more information, see\n    <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html\">Checking object integrity</a> in the\n    <i>Amazon S3 User Guide</i>.</p>",
+                "smithy.api#httpHeader": "x-amz-checksum-crc32c"
+            }
+        },
+        "ChecksumSHA1": {
+            "target": "com.amazonaws.s3#ChecksumSHA1",
+            "traits": {
+                "smithy.api#documentation": "<p>This header can be used as a data integrity check to verify that the data received is the same data that was originally sent.\n    This header specifies the base64-encoded, 160-bit SHA-1 digest of the object. For more information, see\n    <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html\">Checking object integrity</a> in the\n    <i>Amazon S3 User Guide</i>.</p>",
+                "smithy.api#httpHeader": "x-amz-checksum-sha1"
+            }
+        },
+        "ChecksumSHA256": {
+            "target": "com.amazonaws.s3#ChecksumSHA256",
+            "traits": {
+                "smithy.api#documentation": "<p>This header can be used as a data integrity check to verify that the data received is the same data that was originally sent.\n    This header specifies the base64-encoded, 256-bit SHA-256 digest of the object. For more information, see\n    <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html\">Checking object integrity</a> in the\n    <i>Amazon S3 User Guide</i>.</p>",
+                "smithy.api#httpHeader": "x-amz-checksum-sha256"
+            }
+        },
+        "Expires": {
+            "target": "com.amazonaws.s3#Expires",
+            "traits": {
+                "smithy.api#documentation": "<p>The date and time at which the object is no longer cacheable. For more information, see\n            <a href=\"http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.21\">http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.21</a>.</p>",
+                "smithy.api#httpHeader": "Expires"
+            }
+        },
+        "GrantFullControl": {
+            "target": "com.amazonaws.s3#GrantFullControl",
+            "traits": {
+                "smithy.api#documentation": "<p>Gives the grantee READ, READ_ACP, and WRITE_ACP permissions on the\n      object.</p>\n         <p>This action is not supported by Amazon S3 on Outposts.</p>",
+                "smithy.api#httpHeader": "x-amz-grant-full-control"
+            }
+        },
+        "GrantRead": {
+            "target": "com.amazonaws.s3#GrantRead",
+            "traits": {
+                "smithy.api#documentation": "<p>Allows grantee to read the object data and its\n      metadata.</p>\n         <p>This action is not supported by Amazon S3 on Outposts.</p>",
+                "smithy.api#httpHeader": "x-amz-grant-read"
+            }
+        },
+        "GrantReadACP": {
+            "target": "com.amazonaws.s3#GrantReadACP",
+            "traits": {
+                "smithy.api#documentation": "<p>Allows grantee to read the object ACL.</p>\n         <p>This action is not supported by Amazon S3 on Outposts.</p>",
+                "smithy.api#httpHeader": "x-amz-grant-read-acp"
+            }
+        },
+        "GrantWriteACP": {
+            "target": "com.amazonaws.s3#GrantWriteACP",
+            "traits": {
+                "smithy.api#documentation": "<p>Allows grantee to write the ACL for the applicable\n      object.</p>\n         <p>This action is not supported by Amazon S3 on Outposts.</p>",
+                "smithy.api#httpHeader": "x-amz-grant-write-acp"
+            }
+        },
+        "Key": {
+            "target": "com.amazonaws.s3#ObjectKey",
+            "traits": {
+                "smithy.api#documentation": "<p>Object key for which the PUT action was initiated.</p>",
+                "smithy.api#httpLabel": {},
+                "smithy.api#required": {}
+            }
+        },
+        "Metadata": {
+            "target": "com.amazonaws.s3#Metadata",
+            "traits": {
+                "smithy.api#documentation": "<p>A map of metadata to store with the object in S3.</p>",
+                "smithy.api#httpPrefixHeaders": "x-amz-meta-"
+            }
+        },
+        "ServerSideEncryption": {
+            "target": "com.amazonaws.s3#ServerSideEncryption",
+            "traits": {
+                "smithy.api#documentation": "<p>The server-side encryption algorithm used when storing this object in Amazon S3 (for example,\n         AES256, aws:kms).</p>",
+                "smithy.api#httpHeader": "x-amz-server-side-encryption"
+            }
+        },
+        "StorageClass": {
+            "target": "com.amazonaws.s3#StorageClass",
+            "traits": {
+                "smithy.api#documentation": "<p>By default, Amazon S3 uses the STANDARD Storage Class to store newly created objects. The\n         STANDARD storage class provides high durability and high availability. Depending on\n         performance needs, you can specify a different Storage Class. Amazon S3 on Outposts only uses\n         the OUTPOSTS Storage Class. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/dev/storage-class-intro.html\">Storage Classes</a> in the\n         <i>Amazon S3 User Guide</i>.</p>",
+                "smithy.api#httpHeader": "x-amz-storage-class"
+            }
+        },
+        "WebsiteRedirectLocation": {
+            "target": "com.amazonaws.s3#WebsiteRedirectLocation",
+            "traits": {
+                "smithy.api#documentation": "<p>If the bucket is configured as a website, redirects requests for this object to another\n         object in the same bucket or to an external URL. Amazon S3 stores the value of this header in\n         the object metadata. For information about object metadata, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/dev/UsingMetadata.html\">Object Key and Metadata</a>.</p>\n         <p>In the following example, the request header sets the redirect to an object\n         (anotherPage.html) in the same bucket:</p>\n         <p>\n            <code>x-amz-website-redirect-location: /anotherPage.html</code>\n         </p>\n         <p>In the following example, the request header sets the object redirect to another\n         website:</p>\n         <p>\n            <code>x-amz-website-redirect-location: http://www.example.com/</code>\n         </p>\n         <p>For more information about website hosting in Amazon S3, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/dev/WebsiteHosting.html\">Hosting Websites on Amazon S3</a> and <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/dev/how-to-page-redirect.html\">How to Configure Website Page\n            Redirects</a>. </p>",
+                "smithy.api#httpHeader": "x-amz-website-redirect-location"
+            }
+        },
+        "SSECustomerAlgorithm": {
+            "target": "com.amazonaws.s3#SSECustomerAlgorithm",
+            "traits": {
+                "smithy.api#documentation": "<p>Specifies the algorithm to use to when encrypting the object (for example,\n         AES256).</p>",
+                "smithy.api#httpHeader": "x-amz-server-side-encryption-customer-algorithm"
+            }
+        },
+        "SSECustomerKey": {
+            "target": "com.amazonaws.s3#SSECustomerKey",
+            "traits": {
+                "smithy.api#documentation": "<p>Specifies the customer-provided encryption key for Amazon S3 to use in encrypting data. This\n         value is used to store the object and then it is discarded; Amazon S3 does not store the\n         encryption key. The key must be appropriate for use with the algorithm specified in the\n            <code>x-amz-server-side-encryption-customer-algorithm</code> header.</p>",
+                "smithy.api#httpHeader": "x-amz-server-side-encryption-customer-key"
+            }
+        },
+        "SSECustomerKeyMD5": {
+            "target": "com.amazonaws.s3#SSECustomerKeyMD5",
+            "traits": {
+                "smithy.api#documentation": "<p>Specifies the 128-bit MD5 digest of the encryption key according to RFC 1321. Amazon S3 uses\n         this header for a message integrity check to ensure that the encryption key was transmitted\n         without error.</p>",
+                "smithy.api#httpHeader": "x-amz-server-side-encryption-customer-key-MD5"
+            }
+        },
+        "SSEKMSKeyId": {
+            "target": "com.amazonaws.s3#SSEKMSKeyId",
+            "traits": {
+                "smithy.api#documentation": "<p>If <code>x-amz-server-side-encryption</code> is present and has the value of\n         <code>aws:kms</code>, this header specifies the ID of the Amazon Web Services Key Management Service\n         (Amazon Web Services KMS) symmetrical customer managed key that was used for the\n         object. If you specify <code>x-amz-server-side-encryption:aws:kms</code>, but do not\n         provide<code> x-amz-server-side-encryption-aws-kms-key-id</code>, Amazon S3 uses the Amazon Web Services\n         managed key to protect the data. If the KMS key does not exist in the same account\n         issuing the command, you must use the full ARN and not just the ID.\n      </p>",
+                "smithy.api#httpHeader": "x-amz-server-side-encryption-aws-kms-key-id"
+            }
+        },
+        "SSEKMSEncryptionContext": {
+            "target": "com.amazonaws.s3#SSEKMSEncryptionContext",
+            "traits": {
+                "smithy.api#documentation": "<p>Specifies the Amazon Web Services KMS Encryption Context to use for object encryption. The value of this\n         header is a base64-encoded UTF-8 string holding JSON with the encryption context key-value\n         pairs.</p>",
+                "smithy.api#httpHeader": "x-amz-server-side-encryption-context"
+            }
+        },
+        "BucketKeyEnabled": {
+            "target": "com.amazonaws.s3#BucketKeyEnabled",
+            "traits": {
+                "smithy.api#default": false,
+                "smithy.api#documentation": "<p>Specifies whether Amazon S3 should use an S3 Bucket Key for object encryption with server-side encryption using AWS KMS (SSE-KMS). Setting this header to <code>true</code> causes Amazon S3 to use an S3 Bucket Key for object encryption with SSE-KMS.</p>\n         <p>Specifying this header with a PUT action doesn’t affect bucket-level settings for S3 Bucket Key.</p>",
+                "smithy.api#httpHeader": "x-amz-server-side-encryption-bucket-key-enabled"
+            }
+        },
+        "RequestPayer": {
+            "target": "com.amazonaws.s3#RequestPayer",
+            "traits": {
+                "smithy.api#httpHeader": "x-amz-request-payer"
+            }
+        },
+        "Tagging": {
+            "target": "com.amazonaws.s3#TaggingHeader",
+            "traits": {
+                "smithy.api#documentation": "<p>The tag-set for the object. The tag-set must be encoded as URL Query parameters. (For\n         example, \"Key1=Value1\")</p>",
+                "smithy.api#httpHeader": "x-amz-tagging"
+            }
+        },
+        "ObjectLockMode": {
+            "target": "com.amazonaws.s3#ObjectLockMode",
+            "traits": {
+                "smithy.api#documentation": "<p>The Object Lock mode that you want to apply to this object.</p>",
+                "smithy.api#httpHeader": "x-amz-object-lock-mode"
+            }
+        },
+        "ObjectLockRetainUntilDate": {
+            "target": "com.amazonaws.s3#ObjectLockRetainUntilDate",
+            "traits": {
+                "smithy.api#documentation": "<p>The date and time when you want this object's Object Lock to expire. Must be formatted\n         as a timestamp parameter.</p>",
+                "smithy.api#httpHeader": "x-amz-object-lock-retain-until-date"
+            }
+        },
+        "ObjectLockLegalHoldStatus": {
+            "target": "com.amazonaws.s3#ObjectLockLegalHoldStatus",
+            "traits": {
+                "smithy.api#documentation": "<p>Specifies whether a legal hold will be applied to this object. For more information\n         about S3 Object Lock, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/dev/object-lock.html\">Object\n         Lock</a>.</p>",
+                "smithy.api#httpHeader": "x-amz-object-lock-legal-hold"
+            }
+        },
+        "ExpectedBucketOwner": {
+            "target": "com.amazonaws.s3#AccountId",
+            "traits": {
+                "smithy.api#documentation": "<p>The account ID of the expected bucket owner. If the bucket is owned by a different account, the request fails with the HTTP status code <code>403 Forbidden</code> (access denied).</p>",
+                "smithy.api#httpHeader": "x-amz-expected-bucket-owner"
+            }
+        }
+    },
+    "traits": {
+        "smithy.api#input": {}
+    }
+}
+}
