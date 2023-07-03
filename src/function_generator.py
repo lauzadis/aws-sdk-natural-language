@@ -109,8 +109,3 @@ if __name__ == "__main__":
 
     # spec = generator.generate_function_specification("CreateBucket")
     # print(spec)
-
-    func = generator.generate_function("s3", "ListBuckets", {
-        "AWS_ACCESS_KEY_ID": "AKIA35ZTZ6UZS7TDKZWF",
-        "AWS_SECRET_ACCESS_KEY": "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"
-    })
