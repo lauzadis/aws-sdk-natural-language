@@ -31,10 +31,11 @@ The risk is in the accuracy of the similarity search. If it doesn't accuractely 
 function the user is trying to invoke, the experience will be bad.
 """
 class AwsAgent:
-    def __init__(self, model = {}, credentials = {}) -> None:
+    def __init__(self, model = {}, service_name = None, credentials = {}) -> None:
         self.credentials = self.init_credentials(credentials)
         self.searcher = Searcher()
         self.generator = FunctionGenerator(model)
+        self.service_name = service_name
         self.messages = [
             { "role": "system", "content": AGENT_BASE_PROMPT }
         ]
@@ -86,7 +87,7 @@ class AwsAgent:
             function_name = response_message["function_call"]["name"]
 
             # generate a function which will call boto3 under the hood to complete the user's request
-            function = self.generator.generate_function(model, function_name, self.credentials)
+            function = self.generator.generate_function(model, self.service_name, function_name, self.credentials)
 
             # parse arguments and call the function 
             function_args = json.loads(response_message["function_call"]["arguments"])
