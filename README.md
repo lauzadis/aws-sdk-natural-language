@@ -5,7 +5,9 @@ A ChatGPT plugin that enables you to use AWS with natural language.
 Note: This is **not** an AWS product. This is an open source project enabling ChatGPT to *use* AWS.
 
 ## Notice
-This project is on hold. After successfully code-generating just the Amazon S3 service `openapi.yaml` file, I realized that OpenAI applies the same limit on the length of the file as it does to normal text input, which is 8K tokens as of 07/02/2023. This corresponds to roughly 50 APIs, which is not enough to do anything meaningful with AWS' 200+ services.
+This project is on hold (for now). After successfully code-generating just 
+the 
+Amazon S3 service `openapi.yaml` file, I realized that OpenAI applies the same limit on the length of the file as it does to normal text input, which is 8K tokens as of 07/02/2023. This corresponds to roughly 50 APIs, which is not enough to do anything meaningful with AWS' 200+ services.
 
 This project will resume once the token limit increases to a more reasonable amount!
 
