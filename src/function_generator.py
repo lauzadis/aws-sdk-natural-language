@@ -1,4 +1,7 @@
 import re
+import boto3
+
+PASCAL_TO_SNAKE_CASE = re.compile("(?<!^)(?=[A-Z])")
 
 """
 Generate OpenAI function specifications and Boto3 functions using a Smithy model.
@@ -79,15 +82,24 @@ class FunctionGenerator:
     Given a function name and a set of AWS credentials, generate an in-memory function 
     which uses boto3 to make the actual request to AWS.
     """
-    def generate_function(self, function_name, credentials = {}):
+    def generate_function(self, service_name, function_name, credentials = {}):
         if not credentials.get("AWS_ACCESS_KEY_ID") or not credentials.get("AWS_SECRET_ACCESS_KEY"):
             raise Exception("Received invalid credentials, it must be a dictionary with the keys AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY")
 
-        def function(arguments):
-            return "Hello!"
-            # client = boto3.blablabla(credentials = credentials)
-            # return client.function_name(**arguments)
-        
+        def function(arguments = None):
+            client = boto3.client(
+                service_name, 
+                aws_access_key_id = credentials["AWS_ACCESS_KEY_ID"], 
+                aws_secret_access_key = credentials["AWS_SECRET_ACCESS_KEY"]
+            )
+            
+            boto3_function = getattr(client, re.sub(PASCAL_TO_SNAKE_CASE, "_", function_name).lower())
+            
+            if arguments:
+                return boto3_function(**arguments)
+            else:
+                return boto3_function()
+    
         return function
     
 if __name__ == "__main__":
@@ -95,5 +107,10 @@ if __name__ == "__main__":
     model = json.loads(open("./s3.json", "r").read())
     generator = FunctionGenerator(model)
 
-    spec = generator.generate_function_specification("CreateBucket")
-    print(spec)
+    # spec = generator.generate_function_specification("CreateBucket")
+    # print(spec)
+
+    func = generator.generate_function("s3", "ListBuckets", {
+        "AWS_ACCESS_KEY_ID": "AKIA35ZTZ6UZS7TDKZWF",
+        "AWS_SECRET_ACCESS_KEY": "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"
+    })
